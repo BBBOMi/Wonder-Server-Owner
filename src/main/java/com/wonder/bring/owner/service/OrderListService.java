@@ -9,5 +9,5 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class OrderListsService {
+public class OrderListService {
 }
