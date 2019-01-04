@@ -14,7 +14,7 @@ public class OrderList {
     private String nick;
     private String menuName;
     private int size; // 사이즈
-    private int count; // 수량
+    private int orderCount; // 수량
     private int totalPrice; // 메뉴 하나당 전체 가격
     private String memo; // 요청 사항
     private int state; // 상태
