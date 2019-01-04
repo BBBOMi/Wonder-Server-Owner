@@ -13,11 +13,12 @@ import java.util.List;
 
 @Mapper
 public interface OrderListMapper {
-    @Select("SELECT ol.order_idx order_lists_idx, ol.state, ol.time, om.size, om.order_count, om.total_price, om.memo, u.nick, m.name menu_name " +
+    // 모든 주문 내역
+    @Select("SELECT ol.order_idx order_lists_idx, ol.state, ol.time, om.size, om.order_count, om.total_price, om.memo, u.nick, m.name menu_name" +
             "FROM ORDER_LISTS ol JOIN ORDER_MENU om ON ol.order_idx = om.order_idx" +
             "JOIN USERS u ON ol.user_idx = u.user_idx" +
-            "JOIN ORDER_MENU ON om.menu_idx = m.menu_idx" +
-            "WHERE Ol.store_idx = #{storeIdx}" +
+            "JOIN MENU m ON om.menu_idx = m.menu_idx" +
+            "WHERE ol.store_idx = #{storeIdx}" +
             "ORDER BY ol.time")
     List<OrderList> getAllOrderLists(final int storeIdx);
 
