@@ -7,8 +7,8 @@ import com.wonder.bring.owner.utils.Message;
 import com.wonder.bring.owner.utils.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,21 +21,19 @@ import java.util.Optional;
 public class OrderListService {
     private final OrderListMapper orderListMapper;
 
-    public OrderListService(final OrderListMapper orderMapper) {
-        this.orderListMapper = orderMapper;
+    public OrderListService(final OrderListMapper orderListMapper) {
+        this.orderListMapper = orderListMapper;
     }
 
     /**
      * 주문내역들 조회
      */
-    private static List<OrderList> list = new LinkedList<>();
-
     public DefaultRes<List<OrderList>> getOrderList(final int storeIdx) {
-        list = orderListMapper.getAllOrderLists(storeIdx);
-
-        if(orderListMapper.checkIdx(storeIdx) == 0) {
+        if(orderListMapper.checkStore(storeIdx) == 0) {
             return DefaultRes.res(Status.NOT_FOUND, Message.NOT_STORE_FOUND);
         }
+
+        List<OrderList> list = orderListMapper.getAllOrderLists(storeIdx);
 
         if(list.isEmpty())
             return DefaultRes.res(Status.NO_CONTENT, "주문내역이 없습니다");
@@ -49,13 +47,14 @@ public class OrderListService {
      * @param state
      * @return
      */
+    @Transactional
     public DefaultRes updateOrderState(final int orderIdx, final Optional<Integer> state) {
        try {
            if(state.isPresent()) {
-               if(orderListMapper.checkIdx(orderIdx) == 0) {
+               if(orderListMapper.checkOrder(orderIdx) == 0) {
                    return DefaultRes.res(Status.NOT_FOUND, Message.NOT_ORDER_FOUND);
                }
-               orderListMapper.changeState(orderIdx, state.get());
+               orderListMapper.changeState(state.get(),orderIdx);
                return DefaultRes.res(Status.SUCCESS, "상태 변경 성공");
            }
            else
