@@ -1,8 +1,8 @@
 package com.wonder.bring.owner.api;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by bomi on 2019-01-04.
@@ -12,4 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("orderlists")
 @RestController
 public class OrderListController {
+
+    @GetMapping("")
+    public ResponseEntity getOrderLists() {
+        return new ResponseEntity();
+    }
+
+    @PutMapping("")
+    public ResponseEntity changeState(@RequestParam(value = "state", required = false) final String state) {
+        return new ResponseEntity();
+    }
 }
