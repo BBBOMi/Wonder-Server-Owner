@@ -22,6 +22,14 @@ public interface OrderListMapper {
             "ORDER BY ol.time")
     List<OrderList> getAllOrderLists(final int storeIdx);
 
+    // 매장 존재 확인
+    @Select("SELECT COUNT(*) FROM STORES WHERE store_idx = #{storeIdx}")
+    int checkStore(final int storeIdx);
+
+    // 주문 번호 확인
+    @Select("SELECT COUNT(*) FROM ORDER_LISTS WHERE order_idx = #{orderIdx}")
+    int checkOrder(final int orderIdx);
+
     @Update("UPDATE ORDER_LISTS SET state = #{state} WHERE order_idx = #{orderIdx}")
     void changeState(final int state, final int orderIdx);
 }
