@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Data
 public class OrderList {
-    private String orderListIdx;
+    private int orderListIdx;
     private String nick;
     private String menuName;
     private int size; // 사이즈
