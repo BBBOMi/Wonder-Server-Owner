@@ -6,6 +6,8 @@ import com.wonder.bring.owner.model.DefaultRes;
 import com.wonder.bring.owner.utils.Message;
 import com.wonder.bring.owner.utils.Status;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,7 @@ public class OrderListService {
     public OrderListService(final OrderListMapper orderListMapper) {
         this.orderListMapper = orderListMapper;
     }
+    private static final Logger logger = LoggerFactory.getLogger(OrderListService.class);
 
     /**
      * 주문내역들 조회
@@ -50,6 +53,9 @@ public class OrderListService {
     @Transactional
     public DefaultRes updateOrderState(final int orderIdx, final Optional<Integer> state) {
        try {
+           logger.info("state " + state.get());
+           logger.info("orderIdx " + orderIdx);
+
            if(state.isPresent()) {
                if(orderListMapper.checkOrder(orderIdx) == 0) {
                    return DefaultRes.res(Status.NOT_FOUND, Message.NOT_ORDER_FOUND);
@@ -60,6 +66,7 @@ public class OrderListService {
            else
                return DefaultRes.res(Status.BAD_REQUEST, Message.BAD_REQUEST);
        }catch(Exception e) {
+           logger.info("DB에러 이유" + e.getMessage());
            return DefaultRes.res(Status.DB_ERROR, Message.DB_ERROR);
        }
     }
