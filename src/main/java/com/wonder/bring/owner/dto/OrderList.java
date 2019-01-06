@@ -11,9 +11,12 @@ import java.util.List;
 
 @Data
 public class OrderList {
-    private int orderListIdx;
-    private String nick;
-    private int state; // 상태
-    private Date time; // 주문 시각
-    private List<OrderListDetail> menuList;
+private int orderListIdx;
+private String nick;
+private int state; // 상태
+private String time; // 주문 시각
+
+private int totalPrice; //주문번호별 총가격
+private int totalCount; //주문한 상품 총갯수
+private OrderListDetail firstMenu; //주문한 메뉴리스트의 첫번째
 }

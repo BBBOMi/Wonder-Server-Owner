@@ -21,14 +21,14 @@ import static com.wonder.bring.owner.model.DefaultRes.FAIL_DEFAULT_RES;
 @RestController
 public class OrderListController {
     public final OrderListService orderListService;
+    private static final Logger logger = LoggerFactory.getLogger(OrderListService.class);
 
     public OrderListController(OrderListService orderListService) {
         this.orderListService = orderListService;
     }
 
-
     /**
-     * 주문 내역 받아오기
+     * 전체주문 내역 받아오기
      * @param storeIdx
      *      받아올 매장 인덱스
      * @return
@@ -38,26 +38,44 @@ public class OrderListController {
         try {
             return new ResponseEntity<>(orderListService.getOrderList(storeIdx), HttpStatus.OK);
         } catch (Exception e) {
+            logger.info(e.getMessage());
             return new ResponseEntity<>(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // 다시 짜기
+    /**
+     *  주문 상세 내역 받아오기
+     * @param storeIdx
+     * @param orderIdx
+     * @return
+     */
     @GetMapping("/stores/{storeIdx}/orderLists/{orderIdx}")
     public ResponseEntity getOrderListDetails(@PathVariable final int storeIdx, @PathVariable final int orderIdx) {
-
+        try {
+            return new ResponseEntity<>(orderListService.getOrderListDetail(storeIdx, orderIdx), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    // 다시 짜기
+
+    /**
+     *  상태변경하기
+     * @param storeIdx
+     * @param orderIdx
+     * @param state
+     * @return
+     */
     @PutMapping("/stores/{storeIdx}/orderLists/{orderIdx}")
     public ResponseEntity changeState(@PathVariable final int storeIdx,
-                                      @RequestParam(value = "state", required = false) final Optional<Integer> state,
-                                      @PathVariable final int orderIdx) {
+                                      @PathVariable final int orderIdx,
+                                      @RequestParam(value = "state", required = false) final Optional<Integer> state) {
         try {
-            return new ResponseEntity<>(orderListService.updateOrderState(orderIdx, state), HttpStatus.OK);
+            return new ResponseEntity<>(orderListService.updateOrderState(storeIdx, orderIdx, state), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
+
 }
