@@ -77,9 +77,9 @@ public class OrderListController {
     public ResponseEntity changeState(@PathVariable final int storeIdx,
                                       @PathVariable final int orderIdx,
                                       @RequestParam(value = "state", required = false) final Optional<Integer> state,
-                                      @RequestParam(value = "res", required = false) final String res) {
+                                      @RequestParam(value = "res", required = false) final Optional<String> res) {
         try {
-            return new ResponseEntity<>(orderListService.updateOrderState(storeIdx, orderIdx, state, Optional.ofNullable(res)), HttpStatus.OK);
+            return new ResponseEntity<>(orderListService.updateOrderState(storeIdx, orderIdx, state, res), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
         }
