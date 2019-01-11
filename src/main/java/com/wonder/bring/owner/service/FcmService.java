@@ -1,6 +1,5 @@
 package com.wonder.bring.owner.service;
 
-import com.wonder.bring.owner.mapper.FcmMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,6 +7,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.net.URLEncoder;
 
 /**
  * Created by bomi on 2019-01-08.
@@ -20,21 +21,15 @@ public class FcmService {
     private String FIREBASE_SERVER_KEY;
     private final String FIREBASE_API_URL = "https://fcm.googleapis.com/fcm/send";
 
-    private final FcmMapper fcmMapper;
-
-    public FcmService(final FcmMapper fcmMapper) {
-        this.fcmMapper = fcmMapper;
-    }
-
     public void sendPush(final String fcmToken, final String title, String body) {
         JSONObject msg = new JSONObject();
 
-        // 주문번호로 푸쉬보낼 주문자의 토큰값 찾아오기
-       //String fcmToken = fcmMapper.getFcmTokenByOrderIdx(orderIdx);
-
-        // 타이틀, 내용 db에서 갖고 와서 넣을 것
-        msg.put("title", title);
-        msg.put("body", body);
+        try {
+            msg.put("title", URLEncoder.encode(title ,"UTF-8"));
+            msg.put("body", URLEncoder.encode(body ,"UTF-8"));
+        } catch(Exception e) {
+            log.error(e.getMessage());
+        }
 
         String response = callToFcmServer(msg, fcmToken);
         System.out.println("Got response from fcm Server : " + response + "\n\n");
@@ -49,8 +44,9 @@ public class FcmService {
 
         JSONObject json = new JSONObject();
 
-        json.put("notification", message);
         json.put("to", receiverFcmKey);
+        json.put("data", message);
+        json.put("sound", " default");
 
         System.out.println("Sending : " + json.toString());
 

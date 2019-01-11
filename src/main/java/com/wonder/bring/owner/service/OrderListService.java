@@ -47,7 +47,7 @@ public class OrderListService {
         //주문 리스트들
         for(OrderList orderList : list) {
             //주문번호 하나의 메뉴리스트 가져오기
-            List<OrderListDetail> menuList = orderListMapper.getAllOrderListDatails(orderList.getOrderListIdx());
+            List<OrderListDetail> menuList = orderListMapper.getAllOrderListDetails(orderList.getOrderListIdx());
 
             //주문리스트의 가격 설정
             int totalPrice = 0;
@@ -62,7 +62,6 @@ public class OrderListService {
             //주문리스트의 첫번째 메뉴 설정
             orderList.setFirstMenu(menuList.get(0));
         }
-
 
         if(list.isEmpty())
             return DefaultRes.res(Status.NO_CONTENT, "주문내역이 없습니다");
@@ -87,7 +86,7 @@ public class OrderListService {
             return DefaultRes.res(Status.NOT_FOUND, Message.NOT_ORDER_FOUND);
         }
 
-        List<OrderListDetail> list = orderListMapper.getAllOrderListDatails(orderIdx);
+        List<OrderListDetail> list = orderListMapper.getAllOrderListDetails(orderIdx);
 
         return DefaultRes.res(Status.SUCCESS, "주문내역 상세조회 성공", list);
     }
@@ -112,10 +111,6 @@ public class OrderListService {
            }
 
            if(state.isPresent()) {
-               if(orderListMapper.checkOrder(orderIdx) == 0) {
-                   return DefaultRes.res(Status.NOT_FOUND, Message.NOT_ORDER_FOUND);
-               }
-
                String storeName = fcmMapper.getStoreNameByStoreIdx(storeIdx);
                String title = storeName;
                String message = "";
@@ -143,15 +138,16 @@ public class OrderListService {
                    return DefaultRes.res(Status.BAD_REQUEST, Message.BAD_REQUEST);
                }
 
+               final String fcmToken = fcmMapper.getFcmTokenByOrderIdx(orderIdx);
                //주문번호로 fcmToken값을 찾아 전송
-               fcmService.sendPush("", title, message);
+               fcmService.sendPush(fcmToken, title, message);
                orderListMapper.changeState(state.get(),orderIdx);
                return DefaultRes.res(Status.SUCCESS, "상태 변경 성공");
            }
            else
                return DefaultRes.res(Status.BAD_REQUEST, Message.BAD_REQUEST);
-       }catch(Exception e) {
-           log.info("DB에러 이유" + e.getMessage());
+       } catch(Exception e) {
+           log.info(e.getMessage());
            return DefaultRes.res(Status.DB_ERROR, Message.DB_ERROR);
        }
     }

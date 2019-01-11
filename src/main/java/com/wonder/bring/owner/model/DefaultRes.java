@@ -13,11 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DefaultRes<T> {
 
-    private int status;
-
-    private String message;
-
-    private T data;
+    private int status; // 상태코드
+    private String message; // 상황 메세지
+    private T data; // 데이터
 
     public DefaultRes(final int status, final String message) {
         this.status = status;
