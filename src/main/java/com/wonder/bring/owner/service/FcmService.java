@@ -25,8 +25,8 @@ public class FcmService {
         JSONObject msg = new JSONObject();
 
         try {
-            msg.put("title", URLEncoder.encode(title ,"UTF-8"));
-            msg.put("body", URLEncoder.encode(body ,"UTF-8"));
+           msg.put("title", URLEncoder.encode(title ,"UTF-8"));
+           msg.put("body", URLEncoder.encode(body ,"UTF-8"));
         } catch(Exception e) {
             log.error(e.getMessage());
         }
