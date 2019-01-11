@@ -44,6 +44,9 @@ public class OrderListService {
         //주문내역 리스트 맵퍼에서 받아오기
         List<OrderList> list = orderListMapper.getAllOrderLists(storeIdx);
 
+        if(list.isEmpty())
+            return DefaultRes.res(Status.NO_CONTENT, "주문내역이 없습니다");
+
         //주문 리스트들
         for(OrderList orderList : list) {
             //주문번호 하나의 메뉴리스트 가져오기
@@ -62,10 +65,6 @@ public class OrderListService {
             //주문리스트의 첫번째 메뉴 설정
             orderList.setFirstMenu(menuList.get(0));
         }
-
-
-        if(list.isEmpty())
-            return DefaultRes.res(Status.NO_CONTENT, "주문내역이 없습니다");
 
         return DefaultRes.res(Status.SUCCESS, "주문내역 조회 성공", list);
     }
