@@ -46,7 +46,9 @@ public class OrderListController {
     /**
      *  주문 상세 내역 받아오기
      * @param storeIdx
+     *      주문서를 조회할 매장 고유 idx
      * @param orderIdx
+     *      상세 내역을 조회할 주문서 고유 idx
      * @return
      */
     @GetMapping("/stores/{storeIdx}/orderLists/{orderIdx}")
@@ -60,10 +62,15 @@ public class OrderListController {
 
 
     /**
-     *  상태변경하기
+     * 주문 진행 상태 변경
      * @param storeIdx
+     *      주문이 들어온 매장의 고유 idx
      * @param orderIdx
+     *      상태를 변경할 주문서의 고유 idx
      * @param state
+     *      변경할 상태 값
+     * @param res
+     *      주문 승인/거절 일 경우 소요시간/이유
      * @return
      */
     @PutMapping("/stores/{storeIdx}/orderLists/{orderIdx}")
