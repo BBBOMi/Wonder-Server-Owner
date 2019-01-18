@@ -106,7 +106,7 @@ public class OrderListService {
            }
 
            //주문번호 유효 검사
-           if(orderListMapper.checkOrder(orderIdx) == 0) {
+           if(orderListMapper.checkOrderListByStoreIdxAndOrderIdx(storeIdx, orderIdx) == 0) {
                return DefaultRes.res(Status.NOT_FOUND, Message.NOT_ORDER_FOUND);
            }
 
@@ -116,9 +116,9 @@ public class OrderListService {
                String message = "";
 
                if(state.get() == 1) {
-                   if(str.isPresent()) {
+                   if(str.isPresent() && !str.get().equals("")) {
                        message = "요청하신 주문이 접수 되었습니다. \n"
-                               + str + "분 이내에 완성될 예정입니다";
+                               + str.get() + "분 이내에 완성될 예정입니다";
                    } else {
                        return DefaultRes.res(Status.BAD_REQUEST, Message.NOT_RESPONSE);
                    }
@@ -128,9 +128,9 @@ public class OrderListService {
                } else if(state.get() == 3) {
 
                } else if(state.get() == 4) {
-                   if(str.isPresent()) {
+                   if(str.isPresent() && !str.get().equals("")) {
                        message = "요청하신 주문이 거절 되었습니다. \n"
-                               + "거절 사유: " + str;
+                               + "거절 사유: " + str.get();
                    } else {
                        return DefaultRes.res(Status.BAD_REQUEST, Message.NOT_RESPONSE);
                    }
