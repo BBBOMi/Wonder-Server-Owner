@@ -106,7 +106,7 @@ public class OrderListService {
            }
 
            //주문번호 유효 검사
-           if(orderListMapper.checkOrder(orderIdx) == 0) {
+           if(orderListMapper.checkOrderListByStoreIdxAndOrderIdx(storeIdx, orderIdx) == 0) {
                return DefaultRes.res(Status.NOT_FOUND, Message.NOT_ORDER_FOUND);
            }
 

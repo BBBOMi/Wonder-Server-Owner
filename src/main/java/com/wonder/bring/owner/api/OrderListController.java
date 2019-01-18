@@ -2,6 +2,7 @@ package com.wonder.bring.owner.api;
 
 import com.wonder.bring.owner.service.OrderListService;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -56,6 +57,7 @@ public class OrderListController {
         try {
             return new ResponseEntity<>(orderListService.getOrderListDetail(storeIdx, orderIdx), HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage());
             return new ResponseEntity<>(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -81,6 +83,7 @@ public class OrderListController {
         try {
             return new ResponseEntity<>(orderListService.updateOrderState(storeIdx, orderIdx, state, res), HttpStatus.OK);
         } catch (Exception e) {
+
             return new ResponseEntity<>(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

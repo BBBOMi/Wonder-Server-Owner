@@ -67,4 +67,7 @@ public interface OrderListMapper {
     @Select("SELECT COUNT(*) FROM ORDER_LISTS WHERE order_idx = #{orderIdx}")
     int checkOrder(final int orderIdx);
 
+    @Select("SELECT COUNT(*) FROM ORDER_MENU JOIN ORDER_LISTS ON ORDER_LISTS.order_idx = ORDER_MENU.order_idx WHERE ORDER_LISTS.store_idx = #{storeIdx} AND ORDER_LISTS.order_idx = #{orderIdx}")
+    int checkOrderListByStoreIdxAndOrderIdx(@Param("storeIdx") final int storeIdx, @Param("orderIdx") final int orderIdx);
+
 }
