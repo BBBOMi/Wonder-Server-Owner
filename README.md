@@ -1,4 +1,4 @@
-# bring-Owner(구 Wonder-server-Owner)
+# bring-Owner(구 Wonder-Server-Owner)
 
 ![bring_logo.PNG](https://github.com/BBBOMi/Wonder-Server/blob/master/img/bring_logo.PNG)
 
@@ -133,6 +133,6 @@ nohup mvn spring-boot:run&
 
 ## 수상
 
-- 2019 SOPT 제 23기 APPJAM 장려상 수상
+- 2019년 SOPT 제 23기 APPJAM 장려상 수상
 
 ------
