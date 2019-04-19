@@ -105,6 +105,7 @@ nohup mvn spring-boot:run&
 - [IntelliJ IDEA](https://www.jetbrains.com/idea/) - IDE
 - [Mybatis](http://www.mybatis.org/mybatis-3/ko/index.html) - SQL 지원 Persistence 프레임워크
 - [Mysql](https://www.mysql.com/) - DataBase
+- [Postman](https://www.getpostman.com/) - API Development Environment
 - [AWS EC2](https://aws.amazon.com/ko/ec2/?sc_channel=PS&sc_campaign=acquisition_KR&sc_publisher=google&sc_medium=english_ec2_b&sc_content=ec2_e&sc_detail=aws%20ec2&sc_category=ec2&sc_segment=177228231544&sc_matchtype=e&sc_country=KR&s_kwcid=AL!4422!3!177228231544!e!!g!!aws%20ec2&ef_id=WkRozwAAAnO-lPWy:20180412120123:s) - 클라우드 환경 컴퓨팅 시스템
 - [AWS RDS](https://aws.amazon.com/ko/rds/) - 클라우드 환경 데이터베이스 관리 시스템
 - [FCM](https://firebase.google.com/docs/cloud-messaging/?hl=ko) - 클라우드 메시징 시스템
@@ -124,9 +125,9 @@ nohup mvn spring-boot:run&
 
 ## bring의 다른 프로젝트
 
+- [SERVER](https://github.com/BBBOMi/Wonder-Server)
 - [ANDROID](https://github.com/Bring-SOPT/Wonder-Android)
 - [IOS](https://github.com/Bring-SOPT/Wonder-iOS)
-- [SERVER](https://github.com/BBBOMi/Wonder-Server)
 - [ANDROID-OWNER](https://github.com/Bring-SOPT/Wonder-Android-Owner)
 
 <br>
